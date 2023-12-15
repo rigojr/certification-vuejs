@@ -1,19 +1,49 @@
 <script setup>
-import { StarIcon } from "@heroicons/vue/24/solid";
-
 import { reactive } from "vue";
+
 import { items } from "./movies.json";
+import StartButton from './components/StartButton/StartButton.vue';
 
-const movies = reactive(items);
+const movies = reactive(getMovies(items));
 
-/*
-  This is an Icon that you can use to represent the stars if you like
-  otherwise you could just use a simple ⭐️ emoji, or * character.
-*/
+function getMovies(rawMovies) {
+  rawMovies.forEach((movie) => {
+    const rating = getMovieRating(movie.rating);
+
+    movie.rating = rating;
+  });
+
+  return rawMovies;
+}
+
+function getMovieRating(rating) {
+  const newRating = new Array(5).fill(undefined).map((_, index) => ({
+    'isDisabled': index >= rating,
+    'isClickable': index !== (rating - 1)
+  }));
+
+  return newRating;
+}
+
+function onRatingClicked(id, ratingIndex) {
+  const movie = movies.find((movie) => movie.id === id);
+
+  if (movie === undefined) {
+    return;
+  }
+
+  movie.rating.forEach((rating, index) => {
+    rating.isDisabled = index > ratingIndex;
+    rating.isClickable = true;
+  });
+
+  movie.rating[ratingIndex].isClickable = false;
+}
+
 </script>
 
 <template>
-  <div class="flex justify-center m-14">
+  <div class="flex justify-center">
     <div
       class="flex flex-col w-1/5 m-4 text-white"
       v-for="movie in movies"
@@ -38,9 +68,15 @@ const movies = reactive(items);
         <p class="m-1 text-base text-black">{{ movie.description }}</p>
         <p class="flex items-end flex-grow m-1 text-sm text-black">
           Rating:
-          <span v-for="_ in movie.rating">
-          ⭐️
-          </span>
+          <div
+            v-for="rating, index in movie.rating"
+            class="flex"
+          >
+            <StartButton
+              @click="onRatingClicked(movie.id, index)"
+              v-bind="rating"
+            />
+          </div>
         </p>
       </div>
     </div>
