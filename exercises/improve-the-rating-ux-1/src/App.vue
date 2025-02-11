@@ -3,8 +3,17 @@ import { ref } from "vue";
 import { StarIcon } from "@heroicons/vue/24/solid";
 import { items } from "./movies.json";
 const movies = ref(items);
+
 function updateRating(movieIndex, rating) {
   movies.value[movieIndex].rating = rating;
+}
+
+function getRating(rating) {
+  if (rating === null) {
+    return "-";
+  }
+
+  return rating;
 }
 </script>
 
@@ -17,6 +26,18 @@ function updateRating(movieIndex, rating) {
         :key="movie.id"
       >
         <div class="movie-item-image-wrapper">
+          <div
+            class="movie-item-image-rating-wrapper"
+            :class="{
+              'movie-item-image-rating-wrapper--no-rating':
+                movie.rating === null,
+            }"
+          >
+            <StarIcon />
+            <p class="movie-item-image-rating">
+              {{ getRating(movie.rating) }}
+            </p>
+          </div>
           <img :src="movie.image" class="movie-item-image" alt="" />
         </div>
 
@@ -60,3 +81,33 @@ function updateRating(movieIndex, rating) {
     </div>
   </div>
 </template>
+
+<style>
+.movie-item-image-wrapper {
+  position: relative;
+}
+
+.movie-item-image-rating-wrapper {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 36px;
+
+  svg {
+    color: yellow;
+  }
+}
+
+.movie-item-image-rating-wrapper--no-rating {
+  svg {
+    color: gray;
+  }
+}
+
+.movie-item-image-rating {
+  font-size: 12px;
+  position: absolute;
+  top: 10px;
+  right: 14px;
+}
+</style>

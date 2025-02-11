@@ -5,7 +5,7 @@
 			"name": "The Godfather",
 			"description": "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
 			"image": "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_FMjpg_UY1982_.jpg",
-			"rating": 4,
+			"rating": null,
 			"genres": [
 				"Crime",
 				"Drama"
