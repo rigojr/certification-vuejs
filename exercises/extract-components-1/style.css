@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.app {
+    @apply max-w-full flex flex-col items-center justify-center h-screen mx-auto relative space-y-8;
+}
+
+.modal-wrapper {
+    @apply absolute inset-0 flex items-center justify-center z-20 bg-gray-800/40 backdrop-blur;
+}
+
+.modal-wrapper-inner {
+    @apply shrink-0 w-full max-w-2xl rounded-md flex flex-col overflow-hidden shadow-2xl bg-white dark:bg-gray-800 p-4 space-y-4 dark:text-white;
+}
+
+.movie-form-input-wrapper {
+    @apply flex flex-col items-start justify-start w-full;
+}
+
+.movie-form-input {
+    @apply w-full dark:bg-gray-900 rounded-md;
+}
+
+.movie-form-textarea {
+    @apply w-full dark:bg-gray-900 h-24 rounded-md;
+}
+
+.movie-form-checkbox {
+    @apply rounded-md focus:bg-pink-500/25 appearance-none checked:bg-pink-500 dark:bg-gray-900;
+}
+
+.movie-form-checkbox-label {
+    @apply flex items-center justify-start space-x-2;
+}
+
+.movie-form-actions-wrapper {
+    @apply flex items-center justify-between w-full;
+}
+
+.button {
+    @apply bg-gray-500 hover:bg-gray-400 p-2 rounded-md;
+}
+
+.button-primary {
+    @apply bg-cyan-500 hover:bg-cyan-400 p-2 rounded-md text-white;
+}
+
+.button-disabled {
+    @apply bg-gray-600 text-gray-400 cursor-not-allowed;
+}
+
+.movie-form-error {
+    @apply text-red-700 h-8;
+}
+
+.movie-actions-list-wrapper {
+    @apply flex items-center justify-between w-full max-w-7xl px-8;
+}
+
+.movie-actions-list-info {
+    @apply flex items-center justify-center space-x-8 text-white text-xl;
+}
+
+.movie-actions-list-actions {
+    @apply flex items-center justify-between space-x-8;
+}
+
+.movie-actions-list-action-button {
+    @apply p-2 rounded-md text-sm self-end justify-self-end;
+}
+
+.movie-list {
+    @apply flex flex-wrap items-center justify-between max-w-7xl overflow-scroll h-[860px];
+}
+
+.movie-item {
+    @apply w-96 shrink-0 h-auto bg-white rounded-md flex flex-col items-center justify-start overflow-hidden shadow-2xl mr-8 mt-8;
+}
+
+.movie-item-image-wrapper {
+    @apply h-[520px] overflow-hidden w-full relative;
+}
+
+.movie-item-image {
+    @apply object-cover object-center h-[600px];
+}
+
+.movie-item-star-wrapper {
+    @apply absolute top-0 right-0;
+}
+
+.movie-item-star-content-wrapper {
+    @apply absolute inset-0 flex items-center justify-center text-center;
+}
+
+.movie-item-star-rating-icon {
+    @apply h-16 w-16;
+}
+
+.movie-item-star-content-rating-rated {
+    @apply text-xl text-yellow-800;
+}
+
+.movie-item-star-content-rating-not-rated {
+    @apply text-xl text-gray-400;
+}
+
+.movie-item-content-wrapper {
+    @apply h-56 p-4 flex flex-col items-start justify-start w-full;
+}
+
+.movie-item-title-wrapper {
+    @apply h-16 shrink-0 w-full;
+}
+
+.movie-item-title {
+    @apply text-2xl truncate;
+}
+
+.movie-item-description-wrapper {
+    @apply h-24 overflow-scroll flex-1;
+}
+
+.movie-item-description {
+    @apply text-sm;
+}
+
+.movie-item-genres-wrapper {
+    @apply flex items-center justify-start space-x-1;
+}
+
+.movie-item-genre-tag {
+    @apply text-xs bg-indigo-500 text-white py-0.5 px-2 rounded-full;
+}
+
+.movie-item-rating-wrapper {
+    @apply w-full flex items-center justify-start h-8 shrink-0;
+}
+
+.movie-item-rating-text {
+    @apply text-xs mr-2 leading-7;
+}
+
+.movie-item-star-icon-wrapper {
+    @apply items-center justify-start flex flex-1 space-x-1;
+}
+
+.movie-item-star-icon-button {
+    @apply rounded-md disabled:cursor-not-allowed;
+}
+
+.movie-item-star-icon {
+    @apply h-5 w-5;
+}
+
+
+.movie-item-actions-list-wrapper {
+    @apply group-hover:flex shrink-0 hidden items-center justify-end space-x-2;
+}
+
+.movie-item-action-edit-button {
+    @apply rounded-full bg-gray-200 p-3 text-gray-800 hover:text-white hover:bg-indigo-500;
+}
+
+.movie-item-action-remove-button {
+    @apply rounded-full bg-gray-200 p-3 text-gray-800 hover:text-white hover:bg-red-500;
+}
+
+.flex-spacer {
+    @apply w-full flex-1;
+}
