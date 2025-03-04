@@ -1,0 +1,9 @@
+- The current template for the form is moved into the `MovieForm.vue` component.
+- The current part of the template in `App.vue` where the form was is replaced by the `MovieForm.vue` component.
+- The `MovieForm.vue` component accepts the `modelValue` as prop.
+- The `MovieForm.vue` component dispatches a `cancel` event.
+- The `MovieForm.vue` component dispatches a `update:modelValue` event with an `object` as params.
+- It still adds a new movie to the list.
+- It stills updates an edited movie.
+- It still shows and hides the form as expected.
+- The rest of our application still works as expected.

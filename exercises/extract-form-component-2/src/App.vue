@@ -1,105 +1,67 @@
 <script setup>
-import { computed, ref } from "vue";
-/*
-These are Icons that you can use, of course you can use other ones if you prefer.
-*/
+import MovieForm from "@/MovieForm.vue";
+import MovieItem from "@/MovieItem.vue";
 import { items } from "./movies.json";
-import MovieItem from "./MovieItem.vue";
-import MovieForm from "./MovieForm.vue";
-
+import { computed, reactive, ref } from "vue";
 const movies = ref(items);
-const selectedMovie = ref(undefined);
-const isMovieFormVisible = ref(false);
-
+const currentMovie = ref();
 function updateRating(id, rating) {
-  const movie = movies.value.find((movie) => movie.id === id);
-
-  if (movie === undefined) {
-    return;
-  }
-
-  movie.rating = rating;
-}
-
-function removeMovie(id) {
-  const movieIndex = movies.value.findIndex((movie) => movie.id === id);
-
-  if (movieIndex === -1) {
-    return;
-  }
-
-  movies.value = movies.value.filter((movie, index) => index !== movieIndex);
-}
-
-function editMovie(id) {
-  const movie = movies.value.find((movie) => movie.id === id);
-
-  if (movie === undefined) {
-    return;
-  }
-
-  selectedMovie.value = movie;
-
-  showForm();
-}
-
-function saveMovie(effectiveMovie) {
-  const isNewMovie = effectiveMovie.id === undefined;
-
-  if (!isNewMovie) {
-    updateMovie(effectiveMovie);
-
-    return;
-  }
-
-  addMovie(effectiveMovie);
-}
-
-function updateMovie(updatedMovie) {
   movies.value = movies.value.map((movie) => {
-    if (movie.id === updatedMovie.id) {
-      return updatedMovie;
+    if (movie.id === id) {
+      movie.rating = rating;
     }
-
     return movie;
   });
-
-  hideForm();
 }
-
-function addMovie(newMovie) {
-  movies.value.push({
-    ...newMovie,
-    id: movies.value.length + 1
+function removeMovie(id) {
+  movies.value = movies.value.filter((movie) => movie.id !== id);
+}
+function editMovie(id) {
+  currentMovie.value = movies.value.find((movie) => movie.id === id);
+  showForm();
+}
+function saveMovie(data) {
+  const isNew = !!movies.value.find((movie) => movie.id === data.id);
+  if (!isNew) {
+    addMovie(data);
+  } else {
+    updateMovie(data);
+  }
+}
+function updateMovie(data) {
+  movies.value = movies.value.map((m) => {
+    if (m.id === data.id) {
+      data.rating = m.rating;
+      return data;
+    }
+    return m;
   });
-
   hideForm();
 }
-
+function addMovie(data) {
+  movies.value.push(data);
+  hideForm();
+}
+const showMovieForm = ref(false);
 function hideForm() {
-  isMovieFormVisible.value = false;
-  selectedMovie.value = undefined;
+  showMovieForm.value = false;
+  currentMovie.value = null;
 }
-
 function showForm() {
-  isMovieFormVisible.value = true;
+  showMovieForm.value = true;
 }
-
 const averageRating = computed(() => {
   const avg = movies.value
     .map((movie) => parseInt(movie.rating || 0))
     .reduce((a, b) => a + b, 0);
-
   return Number(avg / movies.value.length).toFixed(1);
 });
-
 const totalMovies = computed(() => {
   return movies.value.length;
 });
-
 function removeRatings() {
   movies.value = movies.value.map((movie) => {
-    movie.rating = 0;
+    movie.rating = null;
     return movie;
   });
 }
@@ -107,11 +69,11 @@ function removeRatings() {
 
 <template>
   <div class="app">
-    <div v-if="isMovieFormVisible" class="modal-wrapper">
+    <div v-if="showMovieForm" class="modal-wrapper">
       <div class="modal-wrapper-inner">
         <MovieForm
-          :modelValue="selectedMovie"
           @update:modelValue="saveMovie"
+          :modelValue="currentMovie"
           @cancel="hideForm"
         />
       </div>
@@ -133,11 +95,11 @@ function removeRatings() {
         <button
           class="movie-actions-list-action-button"
           :class="{
-            'button-primary': !isMovieFormVisible,
-            'button-disabled': isMovieFormVisible,
+            'button-primary': !showMovieForm,
+            'button-disabled': showMovieForm,
           }"
           @click="showForm"
-          :disabled="isMovieFormVisible"
+          :disabled="showMovieForm"
         >
           Add Movie
         </button>
@@ -155,9 +117,3 @@ function removeRatings() {
     </div>
   </div>
 </template>
-
-<style>
-.app {
-  background-color: black;
-}
-</style>
